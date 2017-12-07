@@ -1,0 +1,10 @@
+__pycache__/
+.pyc
+.vscode/
+*.txt
+*.zip
+*.png
+*.jpg
+*.gz
+logs
+model
