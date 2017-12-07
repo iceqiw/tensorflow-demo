@@ -1,7 +1,7 @@
 import numpy as np
 import queue
-
-
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 class Node:
     def __init__(self, x, y, parent=None, g=0, h=0):
         self.x = x
@@ -13,16 +13,18 @@ class Node:
     def getF(self):
         return self.g+self.h
 
-weight=100
-hight=100
+weight=10
+hight=10
 
 map = np.zeros((weight, hight))
+map[1:8,3:5]=1
+print(map)
 openSet = {}
 closedSet = {}
 
 DIRECT_VALUE = 10
 startPoint = Node(2, 2)
-endPoint = Node(98, 98)
+endPoint = Node(8, 8)
 
 # print(map[100,100])
 
@@ -95,10 +97,23 @@ def findNodeInOpen(x, y):
 
 def drawPath():
     end = closedSet.get((endPoint.x, endPoint.y))
+    fig1 = plt.figure()
+    ax1 = fig1.add_subplot(111, aspect='equal')
+    ax1.add_patch(
+    patches.Rectangle(
+        (2, 4),   # (x,y)
+        6,          # width
+        1,          # height
+    ))
     while end:
+        x=end.x
+        y=end.y
         map[end.x-1, end.y-1] = 5
         end = end.parent
+        plt.plot([x],[y],'ro')
     print(map)
+    plt.show()
+   
 
 
 def start():
