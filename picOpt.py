@@ -13,7 +13,8 @@ with tf.Session() as session:
     plt.imshow(img_data.eval())
 
     # print(img_data.shape)
-    adjusted = tf.image.adjust_contrast(img_data,-200)
+    
+    adjusted = tf.image.adjust_contrast(img_data,200)
     # print(adjusted.shape)
     plt.figure(2)
     plt.imshow(adjusted.eval())

@@ -21,7 +21,7 @@ with tf.Graph().as_default() as g:
     train_op = tf.train.GradientDescentOptimizer(0.01).minimize(loss)
 
 with tf.Session(graph=g) as sess:
- #   sess.run(tf.initialize_all_variables())
+    sess.run(tf.initialize_all_variables())
     epoch=1
     for i in range(10):
         for(x,y) in zip(train_X,train_Y):
