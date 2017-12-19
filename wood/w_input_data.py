@@ -55,9 +55,9 @@ if __name__ == '__main__':
         sess.run(tf.global_variables_initializer())
         # 启动队列
         threads = tf.train.start_queue_runners(sess=sess)
-        for i in range(200):
+        for i in range(1):
             val, l = sess.run([img_batch, label_batch])
-            print(val.shape)
+            print(val)
             print(l.shape, l)
             plt.figure(1)
             plt.imshow(val[0])
