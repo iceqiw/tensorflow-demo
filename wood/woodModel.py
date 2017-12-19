@@ -127,7 +127,6 @@ def main(_):
         threads = tf.train.start_queue_runners(sess=sess)
         for i in range(20):
             img,label=sess.run([img_batch,label_batch])
-            print(label)
             train_step.run(feed_dict={
                 x: img,
                 y_:label,
@@ -136,7 +135,7 @@ def main(_):
             prediction_img = prediction.eval(
             feed_dict={x: img,
                        keep_prob: 1.0}, session=sess)
-            print( prediction_img)
+            print( prediction_img,label)
             
         
 
