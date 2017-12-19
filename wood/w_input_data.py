@@ -10,10 +10,13 @@ HEIGHT = 640
 WIDTH = 640
 DEPTH = 3
 
+
 def preprocess(image):
-    # Pad 4 pixels on each dimension of feature map, done in mini-batch
-    image = tf.image.resize_images(image,size=[28,28])
-    
+    adjusted = tf.image.adjust_contrast(image, 200)
+    rgb_image_float = tf.image.convert_image_dtype(adjusted, tf.float32)
+    image = tf.image.rgb_to_hsv(rgb_image_float)
+    image = tf.image.resize_images(image,size=[224,224])
+    # image = tf.cast(image, tf.uint8)
     return image
 
 
@@ -29,8 +32,9 @@ def example_parser(serialized_example):
     image.set_shape([WIDTH * HEIGHT * DEPTH])
     label = tf.cast(features['label'], tf.int32)
     image = tf.reshape(image, [640, 640, 3])
-    image=preprocess(image)
+    image = preprocess(image)
     return image, tf.one_hot(label, 2)
+
 
 def input_fn(filename, batch_size=1, num_epochs=1):
     dataset = tf.data.TFRecordDataset([filename])
@@ -51,7 +55,7 @@ if __name__ == '__main__':
         sess.run(tf.global_variables_initializer())
         # 启动队列
         threads = tf.train.start_queue_runners(sess=sess)
-        for i in range(2):
+        for i in range(200):
             val, l = sess.run([img_batch, label_batch])
             print(val.shape)
             print(l.shape, l)
