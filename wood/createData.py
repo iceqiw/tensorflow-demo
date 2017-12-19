@@ -28,7 +28,7 @@ def convert_to(name,directory):
                 img_path = class_path + img_name
                 print(img_path,index)
                 img = Image.open(img_path)
-                img = img.resize((28, 28))
+                img = img.resize((640, 640))
                 img_raw = img.tobytes()
                 example = tf.train.Example(features=tf.train.Features(feature={
                         'img_raw': _bytes_feature(img_raw),

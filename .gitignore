@@ -9,3 +9,5 @@ __pycache__/
 logs
 model
 train.tfrecords
+wood/wood_model
+MNIST_data
