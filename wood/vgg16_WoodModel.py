@@ -75,8 +75,9 @@ def wood_model_fn(features, labels, mode, params):
 
 def wood_vgg16_model(inputs, mode):
 
+    input_op=tf.reshape(inputs,[-1,224,224,1])
     # block 1 -- outputs 112x112x64
-    conv1_1 = conv_op(inputs, name="conv1_1", kh=3, kw=3, n_out=64)
+    conv1_1 = conv_op(input_op, name="conv1_1", kh=3, kw=3, n_out=64)
     conv1_2 = conv_op(conv1_1, name="conv1_2", kh=3, kw=3, n_out=64)
     pool1 = tf.layers.max_pooling2d(
         inputs=conv1_2, pool_size=[2, 2], strides=2)
@@ -170,13 +171,14 @@ def main(unused_argv):
         tensors=tensors_to_log, every_n_iter=10)
 
     # Train the model
-    wood_classifier.train(
-        input_fn=
-        lambda: train_input_fn(train_file, FLAGS.batch_size, FLAGS.train_epochs),
-        hooks=[logging_hook])
-    # predictions = wood_classifier.predict(input_fn=lambda:pred_input_fn("/home/qiwei/workspace/python/tensorflow-demo/wood/img/OK/IMG_3692.jpg"))
-    # for i, p in enumerate(predictions):
-    #     print("Prediction %s: %s" % (i + 1, p["classes"]))
+    # wood_classifier.train(
+    #     input_fn=
+    #     lambda: train_input_fn(train_file, FLAGS.batch_size, FLAGS.train_epochs),
+    #     hooks=[logging_hook])
+
+    predictions = wood_classifier.predict(input_fn=lambda:pred_input_fn("/home/qiwei/workspace/python/tensorflow-demo/wood/img/OK/IMG_3692.jpg"))
+    for i, p in enumerate(predictions):
+        print("Prediction %s: %s" % (i + 1, p["classes"]))
         
 
 

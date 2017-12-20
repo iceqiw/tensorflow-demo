@@ -51,7 +51,8 @@ def pred_input_fn(filename):
     img_data = tf.image.decode_jpeg(image_raw_data_jpg, channels=3)
     image = tf.image.rgb_to_grayscale(img_data)
     image = tf.image.resize_images(image,size=[224,224])
-    return tf.reshape(image, [-1, 224, 224, 1])
+    dataset = tf.data.Dataset.from_tensors(image)
+    return dataset.make_one_shot_iterator().get_next()
 
 def pred_input_fn2(filename):
   image_raw_data_jpg = tf.gfile.FastGFile(filename, 'rb').read()
